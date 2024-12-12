@@ -5,7 +5,7 @@ CC2340R5 LaunchPad *2
 ## IDE
 TI Code Composer Studio 12.7.1
 ## SDK
-simplelink_lowpower_f3_sdk_8_10_01_02
+simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble
 ## Procedure
 * OOB data generating and exchange
 ![image](https://github.com/user-attachments/assets/1703fc7f-4b30-4c92-bb54-da7da8d269cd)
