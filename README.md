@@ -1,8 +1,8 @@
 # Introduction
 This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy.
 ## Tools
-* CC2340R5 LaunchPad *2 (BLE chip)
-* TA010 *2 (HSM)
+* CC2340R5 LaunchPad *2 (TI BLE chip)
+* TA010 *2 (Microchip HSM)
 ## IDE
 TI Code Composer Studio 12.7.1
 ## SDK
