@@ -1,12 +1,19 @@
-1. The project is to implement the standard TLS within BLE OOB pairing based on CC2340R5.
+# Introduction
+This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.
+## Tools
+* CC2340R5 LaunchPad *2 (TI BLE chip)
+* TA010 *2 (Microchip HSM)
+## IDE
+TI Code Composer Studio 12.7.1
+## SDK
+simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble
+## Procedure
+* The process of generating OOB data and exchanging it via ATT
+![image](https://github.com/user-attachments/assets/d31d1a88-43bf-46b1-97de-00466f7e5b56)
+* Certificates Chain Verification and challenge validation between two BLE devices
+![image](https://github.com/user-attachments/assets/e51c71de-1fc5-4296-b701-049df57c2865)
+* Standard BLE OOB Pairing procedure
+![image](https://github.com/user-attachments/assets/2f32dbc1-0d85-48f0-ac79-24cc3466df78)
 
-      The image below is shown the procedure of OOB Pairing.
-![image](https://github.com/user-attachments/assets/ff57227b-9b0d-443b-84a2-131f25056025)
 
 
-      The image below is shown the how to implement the Certificates exchange and challenge validation. 
-![image](https://github.com/user-attachments/assets/3f87abeb-0600-4799-8e28-ad60ed24e546)
-
-
-      The image below is the standard BLE OOB Pairing procedure. 
-![image](https://github.com/user-attachments/assets/c424d8a5-fe35-441e-b41c-ee1f36a72725)
