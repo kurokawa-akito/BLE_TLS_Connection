@@ -258,7 +258,7 @@ Pairing procedure initiated by Central.
 ## TA010 Commands
 In this project, the commands used are Read, GenKey, Nonce, and Sign.
 ### Read
-Read data from the EEPROM.
+Read data from the EEPROM.  
 ![image](https://github.com/user-attachments/assets/605a223c-412b-4676-a514-1f5e7e74c101)  
 #### Command format  
 ![image](https://github.com/user-attachments/assets/1ecd1a05-fbcb-468f-9e75-961ec691469b)
