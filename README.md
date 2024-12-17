@@ -254,3 +254,25 @@ app_simple_gatt.c in Peripheral:
 
 ## End of the procedure
 Pairing procedure initiated by Central.
+
+## TA010 Commands
+In this project, the commands used are Read, GenKey, Nonce, and Sign.
+### Read
+Read data from the EEPROM.
+![image](https://github.com/user-attachments/assets/605a223c-412b-4676-a514-1f5e7e74c101)  
+#### Command format  
+![image](https://github.com/user-attachments/assets/1ecd1a05-fbcb-468f-9e75-961ec691469b)
+### GenKey
+Generate a ECC public key associated with the ECC private key in slot 0.
+#### Command format
+![image](https://github.com/user-attachments/assets/58d81cdc-79f8-4e08-96bd-68d611a4cd3e)
+### Nonce
+Generate a 32 bytes random number.
+#### Command format
+![image](https://github.com/user-attachments/assets/20232808-cd47-4e64-85c7-b0815d4e803e)
+### Sign
+Use ECDSA to calculate the signature of a piece of data.
+#### Command format
+![image](https://github.com/user-attachments/assets/80a92261-2ce8-4cfa-8a10-52bbc8692e46)
+
+
