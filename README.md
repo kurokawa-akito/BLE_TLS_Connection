@@ -11,7 +11,7 @@ simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\bas
 * The process of generating OOB data and exchanging it via ATT
 ![image](https://github.com/user-attachments/assets/283de8bf-32e5-4144-b3df-39e57752f125)
 * Certificates Chain Verification and challenge validation between two BLE devices
-![image](https://github.com/user-attachments/assets/f3e13024-365a-473a-b611-02cab9dd0edb)
+![image](https://github.com/user-attachments/assets/dabd6a73-319f-4d65-b4f3-60c2a49e2ee6)
 * Standard BLE OOB Pairing procedure
 ![image](https://github.com/user-attachments/assets/0258b4d5-c172-4b50-8c22-c7e4c5dde74b)
 ## Detail
