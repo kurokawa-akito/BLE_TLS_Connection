@@ -4,11 +4,11 @@ This project integrates an HSM to implement the standard TLS authentication proc
 * CC2340R5 LaunchPad *2 (TI BLE chip)
 * TA010 *2 (Microchip HSM)
 ## IDE
-Code Composer Studio 12.7.1 (CC2340R5)  
-MPLAB X IDE v6.20 (TA010)
+* Code Composer Studio 12.7.1 (CC2340R5)  
+* MPLAB X IDE v6.20 (TA010)
 ## SDK
-simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble  
-Trust Platform Design Suite (Usecases\TA010-TFLXAUTH\Asymmetric Authentication)
+* simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble  
+* Trust Platform Design Suite (Usecases\TA010-TFLXAUTH\Asymmetric Authentication)
 ## Procedure
 * The process of generating OOB data and exchanging it via ATT
 ![image](https://github.com/user-attachments/assets/283de8bf-32e5-4144-b3df-39e57752f125)
