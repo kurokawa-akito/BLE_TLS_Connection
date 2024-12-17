@@ -253,7 +253,7 @@ app_simple_gatt.c in Peripheral:
 ```
 
 ## End of the procedure
-Pairing procedure initiated by Central.
+Secure Connection pairing initiated by Central.
 
 ## TA010 Commands
 In this project, the commands used are Read, GenKey, Nonce, and Sign.
