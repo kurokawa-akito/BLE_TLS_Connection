@@ -171,8 +171,86 @@ static void SimpleGatt_changeCB( uint8_t paramId )
 
 ```
 ### Peripheral
+Basically, the Peripheral executes corresponding actions based on the commands from the Central.  
+## Verify ECDSA Signature  
+The spirit of a certificate is to use a trusted source's private key to sign someone else's public key.
+### Signing
+![image](https://github.com/user-attachments/assets/266b8e58-8686-42e0-a42d-4881903b4ae0)  
+### Verify  
+![image](https://github.com/user-attachments/assets/ff1d6c9b-8ce9-4d23-b521-8866e7a6d75a)
+When verifying signatures or certificates, the SHA2 and ECDSA drivers provided by TI are required.  
+app_simple_gatt.c in Peripheral:
+```c
+#include <ti/drivers/SHA2.h>
+#include <ti/drivers/ECDSA.h>
+#include <ti/drivers/cryptoutils/cryptokey/CryptoKeyPlaintext.h>
+...
+    case SIMPLEGATTPROFILE_CHAR3:
+      {
+        SimpleGattProfile_getParameter(SIMPLEGATTPROFILE_CHAR3, newValue3);
+        if (newValue3[0] == 2) //verify signer certificate
+        {
+            static uint8_t signerPublicKeyingMaterial[65] = {0};
+            signerPublicKeyingMaterial[0] = 4;
+            memcpy(&signerPublicKeyingMaterial[1], &newValue3[9], 64);
 
-Basically, the Peripheral executes corresponding actions based on the commands from the Central.
+            uint8_t r[32] = {0};
+            uint8_t s[32] = {0};
+            int_fast16_t shaResult;
+            int_fast16_t verifyResult;
+            // SHA256 signer public key
+            SHA2_Params params;
+            SHA2_Handle handle;
+            uint8_t message[64] = {0};
+            for (int i = 0 ; i < 64 ; i++)
+            {
+                message[i] = newValue3[ 9 + i ];
+            }
+            uint8_t shaDigest[32]; // 32 bytes hash values
+            SHA2_init();
+            SHA2_Params_init(&params);
+            handle = SHA2_open(0, NULL);
 
+            shaResult = SHA2_hashData(handle, message, sizeof(message), shaDigest);
+            SHA2_close(handle);
 
+            // ecdsa verify signer certificate
+            for (int i = 0; i < 32; i++) {
+                r[i] = newValue3[73 + i];
+                s[i] = newValue3[105 + i];
+            }
+            CryptoKey signerPublicKey;
+            ECDSA_Handle ecdsaHandle;
+            ECDSA_Params ecdsaParams;
+            ECDSA_OperationVerify operationVerify;
 
+            ECDSA_init();
+            ECDSA_Params_init(&ecdsaParams);
+            ecdsaHandle = ECDSA_open(0, NULL);
+            CryptoKeyPlaintext_initKey(&signerPublicKey,
+                                       signerPublicKeyingMaterial,
+                                       sizeof(signerPublicKeyingMaterial));
+
+            ECDSA_OperationVerify_init(&operationVerify);
+            operationVerify.curve           = &ECCParams_NISTP256;
+            operationVerify.theirPublicKey  = &signerPublicKey;
+            operationVerify.hash            = shaDigest;
+            operationVerify.r               = r;
+            operationVerify.s               = s;
+
+            verifyResult = ECDSA_verify(ecdsaHandle, &operationVerify);
+            if (verifyResult == ECDSA_STATUS_SUCCESS)
+            {
+                MenuModule_printf(APP_MENU_PROFILE_STATUS_LINE2, 0 ,"signer verify status = %d", verifyResult);
+                ECDSA_close(ecdsaHandle);
+
+                uint8_t signerSuccessVerifyMsg[2] = {0x55, 0x66};
+                doAttNotification(46, signerSuccessVerifyMsg, sizeof(signerSuccessVerifyMsg));
+            }
+        }
+        break;
+      }
+```
+
+## End of the procedure
+Pairing procedure initiated by Central.
