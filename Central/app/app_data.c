@@ -369,8 +369,8 @@ static void Verify_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
 
             else if (gattMsg->msg.handleValueNoti.pValue[0] == 0xaa && gattMsg->msg.handleValueNoti.pValue[1] == 0xbb)
             {
-                // read request the peer device's nonce
-                doAttReadReq(50, 5);
+                uint8_t nonceReq[2] = {0x12, 0x23};
+                doAttWriteNoRsp(50, nonceReq, sizeof(nonceReq));
             }
 
             else if (gattMsg->msg.handleValueNoti.pValue[0] == 0xcc && gattMsg->msg.handleValueNoti.pValue[1] == 0xdd)
@@ -399,15 +399,15 @@ static void Challenge_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
     gattMsgEvent_t *gattMsg = ( gattMsgEvent_t * )pMsgData;
     switch ( gattMsg->method )
     {
-        case ATT_READ_RSP:
+        case ATT_HANDLE_VALUE_NOTI:
             {
-                if (gattMsg->msg.readRsp.pValue[0] == 3)
+                if (gattMsg->msg.handleValueNoti.pValue[0] == 3)
                 {
                     MenuModule_printf(APP_MENU_PROFILE_STATUS_LINE1, 0, "32 bytes Nonce received = %d 0x%02x 0x%02x 0x%02x ",
-                                      gattMsg->msg.readRsp.len, gattMsg->msg.readRsp.pValue[0], gattMsg->msg.readRsp.pValue[1],
-                                      gattMsg->msg.readRsp.pValue[2]);
+                                      gattMsg->msg.handleValueNoti.len, gattMsg->msg.handleValueNoti.pValue[0], gattMsg->msg.handleValueNoti.pValue[1],
+                                      gattMsg->msg.handleValueNoti.pValue[2]);
                     /*
-                     *  Send sign command + gattMsg->msg.readRsp.pValue[1] ~ gattMsg->msg.readRsp.pValue[32] to TA010
+                     *  Send sign command + gattMsg->msg.handleValueNoti.pValue[1] ~ gattMsg->msg.handleValueNoti.pValue[32] to TA010
                      */
                     uint8_t ta010Signature[65] = {0x06,
                                                   0x60, 0x1E, 0xAF, 0xC6, 0x69, 0xEF, 0x3C, 0xFE, 0x96, 0x49, 0x3A, 0xAC, 0xD0, 0x45, 0xBF, // signature r
@@ -418,12 +418,7 @@ static void Challenge_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
                                                   0xA9, 0xA7};
                     doAttWriteNoRsp(53, ta010Signature, sizeof(ta010Signature));
                 }
-            }
-            break;
-
-        case ATT_HANDLE_VALUE_NOTI:
-            {
-                if (gattMsg->msg.handleValueNoti.pValue[0] == 6)
+                else if (gattMsg->msg.handleValueNoti.pValue[0] == 6)
                 {
                     uint8_t devicePublicKeyingMaterial[65] = {0};
                     devicePublicKeyingMaterial[0] = 4;

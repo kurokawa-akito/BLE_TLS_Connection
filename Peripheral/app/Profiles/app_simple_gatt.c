@@ -212,16 +212,6 @@ static void SimpleGatt_changeCB( uint8_t paramId )
                 ECDSA_close(ecdsaHandle);
                 uint8_t deviceVerifySuccessMsg[2] = {0xaa, 0xbb};
                 doAttNotification(46, deviceVerifySuccessMsg, sizeof(deviceVerifySuccessMsg));
-                /*
-                 * Send a nonce commands to TA010 to get the 32 bytes random number
-                 */
-                uint8_t ta010Nonce[33] = {0x03, // nonce id
-                                          0x6B, 0x54, 0x38, 0xE5, 0xE3, 0xC0, 0x1B, 0xF1,
-                                          0x44, 0x1E, 0x90, 0xDB, 0x8E, 0x9D, 0x0D, 0xB8,
-                                          0xE4, 0xBB, 0xA1, 0x0D, 0xD9, 0x05, 0xDC, 0x0C,
-                                          0xC0, 0xCA, 0x3F, 0x48, 0xB3, 0x7C, 0xA8, 0x79};
-                SimpleGattProfile_setParameter( SIMPLEGATTPROFILE_CHAR5, SIMPLEGATTPROFILE_CHAR5_LEN,
-                                                ta010Nonce );
             }
         }
       }
@@ -326,6 +316,18 @@ static void SimpleGatt_changeCB( uint8_t paramId )
                                                  0xA2, 0x7C, 0x38, 0x06, 0xCA, 0x7E, 0x04, 0x34, 0x40, 0x3C, 0xAD, 0x8F, 0x48, 0x30, 0xA1,
                                                  0xA9, 0xA7};
             doAttNotification(46, ta010Signature, sizeof(ta010Signature));
+        }
+        else if (newValue5[0] == 0x12 && newValue5[1] == 0x23)
+        {
+            /*
+             * Send a nonce commands to TA010 to get the 32 bytes random number
+             */
+            uint8_t ta010Nonce[33] = {0x03, // nonce id
+                                      0x6B, 0x54, 0x38, 0xE5, 0xE3, 0xC0, 0x1B, 0xF1,
+                                      0x44, 0x1E, 0x90, 0xDB, 0x8E, 0x9D, 0x0D, 0xB8,
+                                      0xE4, 0xBB, 0xA1, 0x0D, 0xD9, 0x05, 0xDC, 0x0C,
+                                      0xC0, 0xCA, 0x3F, 0x48, 0xB3, 0x7C, 0xA8, 0x79};
+            doAttNotification(46, ta010Nonce, sizeof(ta010Nonce));
         }
 
 //        SimpleGatt_notifyChar4();
