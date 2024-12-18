@@ -8,7 +8,7 @@ This project integrates an HSM to implement the standard TLS authentication proc
 - [Detail](#detail)
 - [Verify ECDSA Signature](#verify-ecdsa-signature)
 - [End of Procedure](#end-of-procedure)
-- [TA010 Commands](ta010-commands)
+- [TA010 Commands](#ta010-commands)
 
 ## Tools
 * CC2340R5 LaunchPad *2 (TI BLE chip)
