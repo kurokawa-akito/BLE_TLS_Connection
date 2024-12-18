@@ -1,5 +1,15 @@
 # Introduction
-This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.
+This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.  
+## Contents  
+- [Tools](#tools)
+- [IDE](#ide)
+- [SDK](#sdk)
+- [Procedure](#procedure)
+- [Detail](#detail)
+- [Verify ECDSA Signature](#verify-ecdsa-signature)
+- [End of Procedure](#end-of-procedure)
+- [TA010 Commands](ta010-commands)
+
 ## Tools
 * CC2340R5 LaunchPad *2 (TI BLE chip)
 * TA010 *2 (Microchip HSM)
@@ -254,7 +264,7 @@ app_simple_gatt.c in Peripheral:
       }
 ```
 
-## End of the procedure
+## End of Procedure
 Secure Connection pairing initiated by Central.
 
 ## TA010 Commands
