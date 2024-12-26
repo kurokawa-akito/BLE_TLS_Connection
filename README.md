@@ -64,6 +64,7 @@ When Central scan the specified address, it will automatically initiate the conn
 ```
 #### Connection stage
 Since the default maximum length of ATT packets (ATT_MTU) after connection is 23 bytes (or 65 bytes if Secure Connection is used), it is necessary to send an ATT_EXCHANGE_MTU_REQ within the BLEAPPUTIL_LINK_ESTABLISHED_EVENT case to increase the maximum payload length of ATT packets.  
+
 Use GAPBondMgr_SCGetLocalOOBParameters() to calculate the Local OOB Data (random value & confirm value). This calculation can also be performed before establishing a connection, but it must be completed and exchanged before pairing begins.
 ```c
 void Central_GAPConnEventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
@@ -108,6 +109,7 @@ bStatus_t doAttMtuExchange(uint16 MTUVals)
 }
 ```
 When the BLE stack receives an ATT_RSP packet, the eventHandler can be used to process the received packet. For example, upon receiving an ATT_READ_RSP, the subsequent behavior can be customized using the gattMsgEvent_t structure.  
+
 In app_data.c:
 ```c
 static void GATT_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
@@ -273,7 +275,9 @@ app_simple_gatt.c in Peripheral:
 Secure Connection pairing initiated by Central.
 
 ## TA010 Commands
-In this project, the commands used are Read, GenKey, Nonce, and Sign.
+In this project, the commands used are Read, GenKey, Nonce, and Sign.  
+#### Command format
+![image](https://github.com/user-attachments/assets/9400c60d-8eac-4d28-8afc-3dfdb2fe578f)
 ### Read
 Read data from the EEPROM.  
 ![image](https://github.com/user-attachments/assets/605a223c-412b-4676-a514-1f5e7e74c101)  
