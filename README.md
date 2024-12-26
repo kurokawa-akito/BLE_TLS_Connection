@@ -1,5 +1,10 @@
 # Introduction
-This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.  
+* This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.  
+* Since this project primarily focuses on development at the **application layer** and **GATT profile**, this repository just provides the corresponding code, primarily used to demonstrate how to implement TLS in BLE connections.
+  
+  * Release: hex file for flash
+  * app/app_data.c, ./Profiles/app_simple_gatt.c: OOB Data exchange, Certificates Chain verification and challenge validation
+  * commom/Profiles: GATT profile 
 ## Contents  
 - [Tools](#tools)
 - [IDE](#ide)
@@ -18,12 +23,11 @@ This project integrates an HSM to implement the standard TLS authentication proc
 * MPLAB X IDE v6.20 (TA010)
 ## SDK
 * simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble  
-  * Since this project primarily focuses on development at the **application layer** and **GATT profile**, this repository just provides the corresponding code, primarily used to demonstrate how to implement TLS in BLE connections.
 * Trust Platform Design Suite (Usecases\TA010-TFLXAUTH\Asymmetric Authentication)
 ## Procedure
 * The process of generating OOB data and exchanging it via ATT
 ![image](https://github.com/user-attachments/assets/283de8bf-32e5-4144-b3df-39e57752f125)
-* Certificates Chain Verification and challenge validation between two BLE devices
+* Certificates Chain verification and challenge validation between two BLE devices
 ![image](https://github.com/user-attachments/assets/dabd6a73-319f-4d65-b4f3-60c2a49e2ee6)
 * Standard BLE OOB Pairing procedure
 ![image](https://github.com/user-attachments/assets/0258b4d5-c172-4b50-8c22-c7e4c5dde74b)
