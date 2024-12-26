@@ -64,7 +64,7 @@ When Central scan the specified address, it will automatically initiate the conn
 ```
 #### Connection stage
 Since the default maximum length of ATT packets (ATT_MTU) after connection is 23 bytes (or 65 bytes if Secure Connection is used), it is necessary to send an ATT_EXCHANGE_MTU_REQ within the BLEAPPUTIL_LINK_ESTABLISHED_EVENT case to increase the maximum payload length of ATT packets.  
-
+  
 Use GAPBondMgr_SCGetLocalOOBParameters() to calculate the Local OOB Data (random value & confirm value). This calculation can also be performed before establishing a connection, but it must be completed and exchanged before pairing begins.
 ```c
 void Central_GAPConnEventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
