@@ -276,7 +276,8 @@ Secure Connection pairing initiated by Central.
 
 ## TA010 Commands
 In this project, the commands used are Read, GenKey, Nonce, and Sign.  
-#### Command format
+#### Command format  
+All commands are structured according to the format shown in the image below
 ![image](https://github.com/user-attachments/assets/9400c60d-8eac-4d28-8afc-3dfdb2fe578f)
 ### Read
 Read data from the EEPROM.  
