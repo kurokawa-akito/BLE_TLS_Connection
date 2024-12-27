@@ -274,7 +274,7 @@ app_simple_gatt.c in Peripheral:
 ```
 ## Secure Connection Pairing Setting
 * Legacy Pairing
-* Secure Connection
+* **Secure Connection**
 * Bluetooth LE defines 4 security levels in security mode 1:
   * Level 1: No security (open text, meaning no authentication and no encryption) 
   * Level 2: Encryption with unauthenticated pairing
