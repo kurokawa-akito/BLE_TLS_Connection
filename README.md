@@ -13,6 +13,7 @@
 - [Procedure](#procedure)
 - [Detail](#detail)
 - [Verify ECDSA Signature](#verify-ecdsa-signature)
+- [Secure Connection Pairing Setting](#secure-connection-pairing-setting)
 - [End of Procedure](#end-of-procedure)
 - [TA010 Commands](#ta010-commands)
 
@@ -271,7 +272,15 @@ app_simple_gatt.c in Peripheral:
         break;
       }
 ```
-
+## Secure Connection Pairing Setting
+* Legacy Pairing
+* Secure Connection
+* Bluetooth LE defines 4 security levels in security mode 1:
+  * Level 1: No security (open text, meaning no authentication and no encryption) 
+  * Level 2: Encryption with unauthenticated pairing
+  * Level 3: Authenticated pairing with encryption
+  * **Level 4: Authenticated LE Secure Connections pairing with encryption**
+![image](https://github.com/user-attachments/assets/cb3e8aa6-1eb3-4dc3-b9d8-76dadbac2094)
 ## End of Procedure
 Secure Connection pairing initiated by Central.
 
