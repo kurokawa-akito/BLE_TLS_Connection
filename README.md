@@ -27,7 +27,7 @@
 * simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble  
 * Trust Platform Design Suite (Usecases\TA010-TFLXAUTH\Asymmetric Authentication)
 ## Procedure
-* The process of generating OOB data and exchanging it via ATT
+* The process of generating OOB data and exchanging it
 ![image](https://github.com/user-attachments/assets/283de8bf-32e5-4144-b3df-39e57752f125)
 * Certificates Chain verification and challenge validation between two BLE devices
 ![image](https://github.com/user-attachments/assets/dabd6a73-319f-4d65-b4f3-60c2a49e2ee6)
