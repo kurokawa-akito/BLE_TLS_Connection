@@ -211,12 +211,12 @@ static void SimpleGatt_changeCB( uint8_t paramId )
 ### Peripheral
 Basically, the Peripheral executes corresponding actions based on the commands from the Central.  
 ## Verify ECDSA Signature  
-The spirit of a certificate is to use a trusted source's private key to sign someone else's public key.
 ### Signing
 ![image](https://github.com/user-attachments/assets/266b8e58-8686-42e0-a42d-4881903b4ae0)  
 ### Verify  
-![image](https://github.com/user-attachments/assets/ff1d6c9b-8ce9-4d23-b521-8866e7a6d75a)
-When verifying signatures or certificates, the SHA2 and ECDSA drivers provided by TI are required.  
+![image](https://github.com/user-attachments/assets/ff1d6c9b-8ce9-4d23-b521-8866e7a6d75a)  
+* The spirit of a certificate is to use a trusted source's private key to sign someone else's public key.
+* When verifying signatures or certificates, the SHA2 and ECDSA drivers provided by TI are required.  
 app_simple_gatt.c in Peripheral:
 ```c
 #include <ti/drivers/SHA2.h>
