@@ -15,7 +15,7 @@
 - [Verify ECDSA Signature](#verify-ecdsa-signature)
 - [Secure Connection Pairing Setting](#secure-connection-pairing-setting)
 - [End of Procedure](#end-of-procedure)
-- [TA010 Commands](#ta010-commands)
+- [TA010 Introduction](#ta010-introduction)
 
 ## Tools
 * CC2340R5 LaunchPad *2 (TI BLE chip)
@@ -282,11 +282,16 @@ app_simple_gatt.c in Peripheral:
   * **Level 4: Authenticated LE Secure Connections pairing with encryption**
 ![image](https://github.com/user-attachments/assets/cb3e8aa6-1eb3-4dc3-b9d8-76dadbac2094)
 ## End of Procedure
-Secure Connection pairing initiated by Central.
+Secure Connection pairing initiated by Central.  
 
-## TA010 Commands
+## TA010 Introduction
+### Overview
+#### Simple Diagram  
+![image](https://github.com/user-attachments/assets/b6871560-60ae-430e-ad22-b903f615622e)  
+#### Main Function
+![image](https://github.com/user-attachments/assets/d20aaffa-e73a-4a8a-80f9-9965deaf592f)  
 In this project, the commands used are Read, GenKey, Nonce, and Sign.  
-#### Command format  
+#### General Command format  
 All commands are structured according to the format shown in the image below
 ![image](https://github.com/user-attachments/assets/9400c60d-8eac-4d28-8afc-3dfdb2fe578f)
 ### Read
