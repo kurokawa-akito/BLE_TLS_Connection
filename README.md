@@ -10,12 +10,13 @@
 - [Tools](#tools)
 - [IDE](#ide)
 - [SDK](#sdk)
-- [Procedure](#procedure)
+- [TA010 Introduction](#ta010-introduction)
+- [Authentication Procedure](#authentication-procedure)
 - [Detail](#detail)
 - [Verify ECDSA Signature](#verify-ecdsa-signature)
 - [Secure Connection Pairing Setting](#secure-connection-pairing-setting)
 - [End of Procedure](#end-of-procedure)
-- [TA010 Introduction](#ta010-introduction)
+- [TA010 Command](#ta010-command)
 
 ## Tools
 * CC2340R5 LaunchPad *2 (TI BLE chip)
@@ -26,7 +27,14 @@
 ## SDK
 * simplelink_lowpower_f3_sdk_8_10_01_02\examples\rtos\LP_EM_CC2340R5\ble5stack\basic_ble  
 * Trust Platform Design Suite (Usecases\TA010-TFLXAUTH\Asymmetric Authentication)
-## Procedure
+## TA010 Introduction
+### Overview
+#### Simple Diagram  
+![image](https://github.com/user-attachments/assets/b6871560-60ae-430e-ad22-b903f615622e)  
+#### Main Function
+![image](https://github.com/user-attachments/assets/d20aaffa-e73a-4a8a-80f9-9965deaf592f)  
+In this project, the commands used are Read, GenKey, Nonce, and Sign.  
+## Authentication Procedure
 * The process of generating OOB data and exchanging it
 ![image](https://github.com/user-attachments/assets/283de8bf-32e5-4144-b3df-39e57752f125)
 * Certificates Chain verification and challenge validation between two BLE devices
@@ -284,13 +292,7 @@ app_simple_gatt.c in Peripheral:
 ## End of Procedure
 Secure Connection pairing initiated by Central.  
 
-## TA010 Introduction
-### Overview
-#### Simple Diagram  
-![image](https://github.com/user-attachments/assets/b6871560-60ae-430e-ad22-b903f615622e)  
-#### Main Function
-![image](https://github.com/user-attachments/assets/d20aaffa-e73a-4a8a-80f9-9965deaf592f)  
-In this project, the commands used are Read, GenKey, Nonce, and Sign.  
+## TA010 Command
 #### General Command format  
 All commands are structured according to the format shown in the image below
 ![image](https://github.com/user-attachments/assets/9400c60d-8eac-4d28-8afc-3dfdb2fe578f)
