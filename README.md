@@ -1,6 +1,6 @@
 # Introduction
 * This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.
-    ![image](https://github.com/user-attachments/assets/d65a60a6-235f-416f-8360-25ff379cf0c9)  
+![image](https://github.com/user-attachments/assets/058e1a87-22a0-4c66-ae88-de9dd28b6fa8)
 * Since this project primarily focuses on development at the **application layer** and **GATT profile**, this repository just provides the corresponding code, primarily used to demonstrate how to implement TLS in BLE connections.
   
   * Release: hex file for flash
