@@ -118,38 +118,47 @@ bStatus_t doAttMtuExchange(uint16 MTUVals)
     return status;
 }
 ```
-When the BLE stack receives an ATT_RSP packet, the eventHandler can be used to process the received packet. For example, upon receiving an ATT_READ_RSP, the subsequent behavior can be customized using the gattMsgEvent_t structure.  
+When the BLE stack receives an ATT_RSP packet, the eventHandler can be used to process the received packet. For example, upon receiving an **ATT_HANDLE_VALUE_NTF**, the subsequent behavior can be customized using the gattMsgEvent_t structure.  
 
 In app_data.c:
 ```c
-static void GATT_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
+static void Challenge_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData);
+...
+BLEAppUtil_EventHandler_t challengeHandler =
 {
-  gattMsgEvent_t *gattMsg = ( gattMsgEvent_t * )pMsgData;
-  switch ( gattMsg->method )
-  {
-    ...
-    case ATT_READ_RSP:
-      {
-          if (gattMsg->msg.readRsp.len == 32)
-          {
-              MenuModule_printf(APP_MENU_CONN_EVENT, 0, "OOB data = 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x ",
-                                gattMsg->msg.readRsp.pValue[0], gattMsg->msg.readRsp.pValue[1], gattMsg->msg.readRsp.pValue[2],
-                                gattMsg->msg.readRsp.pValue[3], gattMsg->msg.readRsp.pValue[4]);
-
-              uint8_t oobEnabled = TRUE;
-              GAPBondMgr_SetParameter(GAPBOND_OOB_ENABLED, sizeof(uint8_t), &oobEnabled);
-
-              for (int i = 0; i < 16; i++) {
-                  remoteOobData.confirm[i] = gattMsg->msg.readRsp.pValue[i];
-              }
-
-              for (int i = 0; i < 16; i++) {
-                  remoteOobData.rand[i] = gattMsg->msg.readRsp.pValue[i + 16];
-              }
-              GAPBondMgr_SCSetRemoteOOBParameters(&remoteOobData, 1);
-          }
-      }
-          break;
+    .handlerType    = BLEAPPUTIL_GATT_TYPE,
+    .pEventHandler  = Challenge_EventHandler,
+    .eventMask      = BLEAPPUTIL_ATT_READ_RSP |
+                      BLEAPPUTIL_ATT_HANDLE_VALUE_NOTI
+};
+...
+static void Challenge_EventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
+{
+    gattMsgEvent_t *gattMsg = ( gattMsgEvent_t * )pMsgData;
+    switch ( gattMsg->method )
+    {
+        case ATT_HANDLE_VALUE_NOTI:
+            {
+                if (gattMsg->msg.handleValueNoti.pValue[0] == 3)
+                {
+                    MenuModule_printf(APP_MENU_PROFILE_STATUS_LINE1, 0, "32 bytes Nonce received = %d 0x%02x 0x%02x 0x%02x ",
+                                      gattMsg->msg.handleValueNoti.len, gattMsg->msg.handleValueNoti.pValue[0], gattMsg->msg.handleValueNoti.pValue[1],
+                                      gattMsg->msg.handleValueNoti.pValue[2]);
+                    /*
+                     *  Send sign command + gattMsg->msg.handleValueNoti.pValue[1] ~ gattMsg->msg.handleValueNoti.pValue[32] to TA010
+                     */
+                    uint8_t ta010Signature[65] = {0x06,
+                                                  0x60, 0x1E, 0xAF, 0xC6, 0x69, 0xEF, 0x3C, 0xFE, 0x96, 0x49, 0x3A, 0xAC, 0xD0, 0x45, 0xBF, // signature r
+                                                  0x74, 0xF8, 0x1B, 0xD6, 0xCE, 0x34, 0x65, 0x8F, 0x79, 0x34, 0x59, 0x3F, 0x74, 0xF2, 0x0C,
+                                                  0xA8, 0x3F,
+                                                  0xAF, 0x00, 0xFA, 0x71, 0x3B, 0x53, 0xDC, 0x40, 0x25, 0x39, 0x6D, 0xE8, 0xAC, 0x0D, 0x41, // signature s
+                                                  0xA2, 0x7C, 0x38, 0x06, 0xCA, 0x7E, 0x04, 0x34, 0x40, 0x3C, 0xAD, 0x8F, 0x48, 0x30, 0xA1,
+                                                  0xA9, 0xA7};
+                    doAttWriteNoRsp(53, ta010Signature, sizeof(ta010Signature));
+                }
+            }
+            ...
+            break;
 ```
 It is important to note that the eventHandler for processing ATT packets cannot handle REQ types or ATT_WRITE_CMD packets. Therefore, if specific actions need to be executed upon receiving an ATT_WRITE_CMD, it should be implemented within the callback function.
 ![image](https://github.com/user-attachments/assets/080806e0-8250-4e23-8ce4-2e3e2f74a7e5)    
