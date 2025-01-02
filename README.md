@@ -12,7 +12,7 @@
 - [SDK](#sdk)
 - [TA010 Introduction](#ta010-introduction)
 - [Authentication Procedure](#authentication-procedure)
-- [Detail](#detail)
+- [Implementation Overview](#implementation-overview)
 - [Verify ECDSA Signature](#verify-ecdsa-signature)
 - [Secure Connection Pairing Setting](#secure-connection-pairing-setting)
 - [End of Procedure](#end-of-procedure)
@@ -41,7 +41,7 @@ In this project, the commands used are Read, GenKey, Nonce, and Sign.
 ![image](https://github.com/user-attachments/assets/dabd6a73-319f-4d65-b4f3-60c2a49e2ee6)
 * Standard BLE OOB Pairing procedure
 ![image](https://github.com/user-attachments/assets/0258b4d5-c172-4b50-8c22-c7e4c5dde74b)
-## Detail
+## Implementation Overview
 ### Event Handler
 ![image](https://github.com/user-attachments/assets/e4b08bd6-5018-448d-8a80-6aea60b9406c)
 #### Event Type
