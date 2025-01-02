@@ -100,6 +100,7 @@ typedef enum BLEAppUtil_GATTEventMaskFlags_e
   ...
 } BLEAppUtil_GATTEventMaskFlags_e;
 ```
+* Event Handler Implementation Example 
 ```c
 void Connection_ConnEventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData);
 ...
