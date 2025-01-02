@@ -43,6 +43,7 @@ In this project, the commands used are Read, GenKey, Nonce, and Sign.
 ![image](https://github.com/user-attachments/assets/0258b4d5-c172-4b50-8c22-c7e4c5dde74b)
 ## Detail
 ### Event Handler
+![image](https://github.com/user-attachments/assets/e4b08bd6-5018-448d-8a80-6aea60b9406c)
 #### Event Type
 ```c
 typedef enum BLEAppUtil_eventHandlerType_e
