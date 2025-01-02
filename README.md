@@ -1,5 +1,5 @@
 # Introduction
-* This project integrates an HSM to implement the standard TLS authentication process over Bluetooth Low Energy connection.
+* This project integrates an Hardware Security Module(HSM) to implement the standard TLS authentication process over Bluetooth Low Energy connection.  
 ![image](https://github.com/user-attachments/assets/058e1a87-22a0-4c66-ae88-de9dd28b6fa8)
 * Since this project primarily focuses on development at the **application layer** and **GATT profile**, this repository just provides the corresponding code, primarily used to demonstrate how to implement TLS in BLE connections.
   
@@ -36,12 +36,95 @@
 In this project, the commands used are Read, GenKey, Nonce, and Sign.  
 ## Authentication Procedure
 * The process of generating OOB data and exchanging it
-![image](https://github.com/user-attachments/assets/283de8bf-32e5-4144-b3df-39e57752f125)
+![image](https://github.com/user-attachments/assets/b129fee7-65f1-47ef-b572-f8645909e5a5)  
 * Certificates Chain verification and challenge validation between two BLE devices
 ![image](https://github.com/user-attachments/assets/dabd6a73-319f-4d65-b4f3-60c2a49e2ee6)
 * Standard BLE OOB Pairing procedure
 ![image](https://github.com/user-attachments/assets/0258b4d5-c172-4b50-8c22-c7e4c5dde74b)
 ## Detail
+### Event Handler
+#### Event Type
+```c
+typedef enum BLEAppUtil_eventHandlerType_e
+{
+    BLEAPPUTIL_GAP_CONN_TYPE,           //!< GAP Connection type
+    BLEAPPUTIL_CONN_NOTI_TYPE,          //!< Connection Notification Ttype
+    BLEAPPUTIL_GAP_ADV_TYPE,            //!< GAP Advertise type
+    BLEAPPUTIL_GAP_SCAN_TYPE,           //!< GAP Scan type
+    BLEAPPUTIL_GAP_PERIODIC_TYPE,       //!< GAP Periodic type
+    BLEAPPUTIL_GATT_TYPE,               //!< GATT type
+    BLEAPPUTIL_PASSCODE_TYPE,           //!< Passcode type
+    BLEAPPUTIL_PAIR_STATE_TYPE,         //!< Pairing type
+    BLEAPPUTIL_L2CAP_DATA_TYPE,         //!< L2CAP Data type
+    BLEAPPUTIL_L2CAP_SIGNAL_TYPE,       //!< L2CAP Signal type
+    BLEAPPUTIL_HCI_DATA_TYPE,           //!< HCI Data type
+    BLEAPPUTIL_HCI_GAP_TYPE,            //!< HCI GAP type
+    BLEAPPUTIL_HCI_SMP_TYPE,            //!< HCI SMP type
+    BLEAPPUTIL_HCI_SMP_META_TYPE,       //!< HCI SMP Meta type
+    BLEAPPUTIL_HCI_CTRL_TO_HOST_TYPE    //!< HCI Controller To Host type
+} BLEAppUtil_eventHandlerType_e;
+```
+#### Event Mask Flags
+```c
+/// GAP Conn event mask
+typedef enum BLEAppUtil_GAPConnEventMaskFlags_e
+{
+    BLEAPPUTIL_LINK_ESTABLISHED_EVENT               = (uint32_t)BV(0),   //!< Link established event
+    BLEAPPUTIL_LINK_TERMINATED_EVENT                = (uint32_t)BV(1),   //!< Link terminated event
+    BLEAPPUTIL_CONNECTING_CANCELLED_EVENT           = (uint32_t)BV(2),   //!< Connecting cancelled event
+    BLEAPPUTIL_LINK_PARAM_UPDATE_EVENT              = (uint32_t)BV(3),   //!< Link parameters update event
+    BLEAPPUTIL_LINK_PARAM_UPDATE_REQ_EVENT          = (uint32_t)BV(4),   //!< Link parameters update request event
+    BLEAPPUTIL_LINK_PARAM_UPDATE_REJECT_EVENT       = (uint32_t)BV(5),   //!< Link parameters update reject event
+    BLEAPPUTIL_SIGNATURE_UPDATED_EVENT              = (uint32_t)BV(6),   //!< Signature updated event
+    BLEAPPUTIL_AUTHENTICATION_COMPLETE_EVENT        = (uint32_t)BV(7),   //!< Authentication complete event
+    ...
+} BLEAppUtil_GAPConnEventMaskFlags_e;
+
+/// GATT event mask
+typedef enum BLEAppUtil_GATTEventMaskFlags_e
+{
+	BLEAPPUTIL_ATT_ERROR_RSP                   = (uint32_t)BV(0),	//!< @ref  ATT_ERROR_RSP
+	BLEAPPUTIL_ATT_EXCHANGE_MTU_REQ            = (uint32_t)BV(1),	//!< @ref  ATT_EXCHANGE_MTU_REQ
+	BLEAPPUTIL_ATT_EXCHANGE_MTU_RSP            = (uint32_t)BV(2),	//!< @ref  ATT_EXCHANGE_MTU_RSP
+	BLEAPPUTIL_ATT_FIND_INFO_REQ               = (uint32_t)BV(3),	//!< @ref  ATT_FIND_INFO_REQ
+	BLEAPPUTIL_ATT_FIND_INFO_RSP               = (uint32_t)BV(4),	//!< @ref  ATT_FIND_INFO_RSP
+	BLEAPPUTIL_ATT_FIND_BY_TYPE_VALUE_REQ      = (uint32_t)BV(5),	//!< @ref  ATT_FIND_BY_TYPE_VALUE_REQ
+	BLEAPPUTIL_ATT_FIND_BY_TYPE_VALUE_RSP      = (uint32_t)BV(6),	//!< @ref  ATT_FIND_BY_TYPE_VALUE_RSP
+	BLEAPPUTIL_ATT_READ_BY_TYPE_REQ            = (uint32_t)BV(7),	//!< @ref  ATT_READ_BY_TYPE_REQ
+	BLEAPPUTIL_ATT_READ_BY_TYPE_RSP            = (uint32_t)BV(8),	//!< @ref  ATT_READ_BY_TYPE_RSP
+	BLEAPPUTIL_ATT_READ_REQ                    = (uint32_t)BV(9),	//!< @ref  ATT_READ_REQ
+	BLEAPPUTIL_ATT_READ_RSP                    = (uint32_t)BV(10),	//!< @ref  ATT_READ_RSP
+	BLEAPPUTIL_ATT_READ_BLOB_REQ               = (uint32_t)BV(11),	//!< @ref  ATT_READ_BLOB_REQ
+	BLEAPPUTIL_ATT_READ_BLOB_RSP               = (uint32_t)BV(12),	//!< @ref  ATT_READ_BLOB_RSP
+  ...
+} BLEAppUtil_GATTEventMaskFlags_e;
+```
+```c
+void Connection_ConnEventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData);
+...
+BLEAppUtil_EventHandler_t connectionConnHandler =
+{
+    .handlerType    = BLEAPPUTIL_GAP_CONN_TYPE,
+    .pEventHandler  = Connection_ConnEventHandler,
+    .eventMask      = BLEAPPUTIL_LINK_ESTABLISHED_EVENT |
+                      BLEAPPUTIL_LINK_TERMINATED_EVENT 
+
+};
+...
+void Connection_ConnEventHandler(uint32 event, BLEAppUtil_msgHdr_t *pMsgData)
+{
+    switch(event)
+    {
+        case BLEAPPUTIL_LINK_ESTABLISHED_EVENT:
+        {
+            // do what you want to do
+            break;
+        }
+    }
+}
+...
+BLEAppUtil_registerEventHandler(&connectionConnHandler);
+```
 ### Central
 #### Scanning stage
 When Central scan the specified address, it will automatically initiate the connection.  
