@@ -35,6 +35,8 @@
 ![image](https://github.com/user-attachments/assets/d20aaffa-e73a-4a8a-80f9-9965deaf592f)  
 In this project, the commands used are Read, GenKey, Nonce, and Sign.  
 ## Authentication Procedure
+### BLE Connection Overview
+![image](https://github.com/user-attachments/assets/cc494cb6-ea5f-476d-9382-45beea69ae37)
 * The process of generating OOB data and exchanging it
 ![image](https://github.com/user-attachments/assets/b129fee7-65f1-47ef-b572-f8645909e5a5)  
 * Certificates Chain verification and challenge validation between two BLE devices
