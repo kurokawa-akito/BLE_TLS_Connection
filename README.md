@@ -303,6 +303,8 @@ Basically, the Peripheral executes corresponding actions based on the commands f
 ### Verify  
 ![image](https://github.com/user-attachments/assets/ff1d6c9b-8ce9-4d23-b521-8866e7a6d75a)  
 * The spirit of a certificate is to use a trusted source's private key to sign someone else's public key.
+  ![image](https://github.com/user-attachments/assets/beb6217f-e184-49f0-a791-5d8a865189ff)
+
 * When verifying signatures or certificates, the SHA2 and ECDSA drivers provided by TI are required.  
 app_simple_gatt.c in Peripheral:
 ```c
