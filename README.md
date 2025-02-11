@@ -4,7 +4,7 @@
 * Since this project primarily focuses on development at the **application layer** and **GATT profile**, this repository just provides the corresponding code, primarily used to demonstrate how to implement TLS in BLE connections.
   
   * Release: hex file for flash
-  * app(./app_data.c, ./Profiles/app_simple_gatt.c): OOB Data exchange, Certificates Chain verification and challenge validation
+  * app(./app_data.c, ./Profiles/app_simple_gatt.c): Certificates Chain verification and challenge validation
   * commom/Profiles: GATT profile 
 ## Contents  
 - [Tools](#tools)
